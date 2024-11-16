@@ -1,11 +1,15 @@
 import React, { useEffect } from "react";
-import { View, Text, Button, Alert } from "react-native";
+import { View, Text, Button, Alert, ActivityIndicator } from "react-native";
 import { useAuth } from "../context/AuthContext";
 import { StackScreenProps } from "@react-navigation/stack";
+import useFetchData from "../api/hooks/useFetchData";
+
 
 type RootStackParamList = {
   Home: undefined;
   Login: undefined;
+  Customer: undefined;
+  Survey: undefined;
 };
 
 type Props = StackScreenProps<RootStackParamList, "Home">;
@@ -16,7 +20,7 @@ export default function Home({ navigation }: Props) {
   useEffect(() => {
     navigation.setOptions({
       headerRight: () => (
-        <Button title="Sair" onPress={handleLogout} />
+        <View className="mr-5"><Button title="Sair" onPress={handleLogout} /></View>        
       ),
     });
   }, [navigation]);
@@ -27,10 +31,15 @@ export default function Home({ navigation }: Props) {
   };
 
   return (
-    <View className="flex-1 justify-center items-center bg-gray-100">
-      <Text className="text-2xl font-semibold mb-4">
-        Bem-vindo, {user?.username}!
-      </Text>
+    <View className="flex-1 justify-center items-center space-y-4 p-5 bg-slate-100">
+      <Button 
+        title="Ir para Customer" 
+        onPress={() => navigation.navigate('Customer')} 
+      />
+      <Button 
+        title="Ir para Vistoria" 
+        onPress={() => navigation.navigate('Survey')} 
+      />
     </View>
   );
 };
