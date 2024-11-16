@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Text, ScrollView, TextInput, TouchableOpacity } from "react-native";
+import { View, Text, ScrollView, TextInput, TouchableOpacity, ActivityIndicator } from "react-native";
 import useFetchData from "../api/hooks/useFetchData";
 
 type Customer = {
@@ -10,9 +10,13 @@ type Customer = {
 };
 
 export default function Customer() {
-  const { data } = useFetchData();
+  const { data, loading } = useFetchData();
   const [searchText, setSearchText] = useState("");
   const [filterType, setFilterType] = useState<"all" | "withEmail" | "withPhone">("all");
+
+  if (loading) {
+    return <ActivityIndicator className="mt-10" />;
+  }
 
   const isPhoneValid = (phone: string) => /^\d+$/.test(phone);
 
