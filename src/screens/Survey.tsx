@@ -1,14 +1,13 @@
 import React, { useState } from "react";
-import { View, ActivityIndicator, Text, TouchableOpacity } from "react-native";
+import { View, ActivityIndicator, Text, TouchableOpacity, TextInput } from "react-native";
 import useFetchSurvey from "../api/hooks/useFetchSurvey";
 import { formatDate } from "../utils/formatDate";
-import { useNavigation } from '@react-navigation/native';
 import Icon from "react-native-vector-icons/MaterialIcons";
 import { StackScreenProps } from "@react-navigation/stack";
 
 type Survey = {
   id: number;
-  anomalia: { id: number, nome: string };
+  anomalia: { id: number; nome: string };
   areaVistoriaInterna_id: number;
   dataHora: string;
 };
@@ -25,6 +24,13 @@ type Props = StackScreenProps<RootStackParamList, "Survey">;
 
 export default function Survey({ navigation }: Props) {
   const { data, loading } = useFetchSurvey();
+  const [searchText, setSearchText] = useState("");
+
+  const filteredData = data.filter((survey: Survey) =>
+    survey.anomalia?.nome?.toLowerCase().includes(searchText.toLowerCase()) ||
+    survey.areaVistoriaInterna_id.toString().includes(searchText) ||
+    formatDate(survey.dataHora).toString().includes(searchText)
+  );
 
   if (loading) {
     return <ActivityIndicator className="mt-10" />;
@@ -32,7 +38,14 @@ export default function Survey({ navigation }: Props) {
 
   return (
     <View className="p-4">
-      {data.length === 0 ? (
+      <TextInput
+        className="border border-gray-300 rounded-lg px-4 py-2 mb-4"
+        placeholder="Buscar por código ou anomalia..."
+        value={searchText}
+        onChangeText={setSearchText}
+      />
+
+      {filteredData.length === 0 ? (
         <Text className="text-center text-gray-500">Nenhuma vistoria encontrada</Text>
       ) : (
         <View>
@@ -42,10 +55,10 @@ export default function Survey({ navigation }: Props) {
             <Text className="w-36 font-bold text-gray-700 text-center">Data</Text>
             <Text className="w-24 " />
           </View>
-          {data.map((survey: Survey) => (
+          {filteredData.map((survey: Survey) => (
             <View key={survey.id} className="flex-row border-b border-gray-200 py-3">
               <Text className="w-32 text-gray-600 text-center px-4">{survey.areaVistoriaInterna_id}</Text>
-              <Text className="w-32 text-gray-600 text-center px-4">{survey.anomalia?.nome || 'N/A'}</Text>
+              <Text className="w-32 text-gray-600 text-center px-4">{survey.anomalia?.nome || "N/A"}</Text>
               <Text className="w-36 text-gray-600 text-center px-4">{formatDate(survey.dataHora)}</Text>
               <TouchableOpacity
                 className="w-24 flex items-center justify-center"
