@@ -5,17 +5,13 @@ import { useAuth } from "../context/AuthContext";
 import Login from "../screens/Login";
 import Home from "../screens/Home";
 import Customer from "../screens/Customer";
-
-type RootStackParamList = {
-  Login: undefined;
-  Home: undefined;
-  Customer: undefined;
-  Survey: undefined;
-};
+import Survey from "../screens/Survey";
+import SurveyDetails from "../screens/SurveyDetails";
+import { RootStackParamList } from "../types";
 
 const Stack = createStackNavigator<RootStackParamList>();
 
-export default function AppNavigator(){
+export default function AppNavigator() {
   const { user } = useAuth();
 
   return (
@@ -25,7 +21,9 @@ export default function AppNavigator(){
           <>
             <Stack.Screen name="Home" component={Home} />
             <Stack.Screen name="Customer" component={Customer} />
-          </>          
+            <Stack.Screen name="Survey" component={Survey} />
+            <Stack.Screen name="SurveyDetails" component={SurveyDetails} />
+          </>
         ) : (
           <Stack.Screen name="Login" component={Login} />
         )}

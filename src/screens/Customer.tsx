@@ -46,21 +46,21 @@ export default function Customer() {
       <View className="flex-row justify-around mb-4">
         <TouchableOpacity
           onPress={() => setFilterType("all")}
-          className={`w-1/4 px-4 py-2 rounded-md ${filterType === "all" ? "bg-blue-500" : "bg-gray-300"}`}
+          className={`flex justify-center items-center w-1/4 px-4 py-2 rounded-md ${filterType === "all" ? "bg-blue-500" : "bg-gray-300"}`}
         >
           <Text className={`text-center ${filterType === "all" ? "text-white" : "text-black"}`}>Todos</Text>
         </TouchableOpacity>
         <TouchableOpacity
           onPress={() => setFilterType("withEmail")}
-          className={`px-4 py-2 rounded-md ${filterType === "withEmail" ? "bg-blue-500" : "bg-gray-300"}`}
+          className={`w-1/4 px-4 py-2 rounded-md ${filterType === "withEmail" ? "bg-blue-500" : "bg-gray-300"}`}
         >
-          <Text className={`${filterType === "withEmail" ? "text-white" : "text-black"}`}>Com Email</Text>
+          <Text className={`text-center ${filterType === "withEmail" ? "text-white" : "text-black"}`}>Com Email</Text>
         </TouchableOpacity>
         <TouchableOpacity
           onPress={() => setFilterType("withPhone")}
-          className={`px-4 py-2 rounded-md ${filterType === "withPhone" ? "bg-blue-500" : "bg-gray-300"}`}
+          className={`w-1/4 px-4 py-2 rounded-md ${filterType === "withPhone" ? "bg-blue-500" : "bg-gray-300"}`}
         >
-          <Text className={`${filterType === "withPhone" ? "text-white" : "text-black"}`}>Com Telefone</Text>
+          <Text className={`text-center ${filterType === "withPhone" ? "text-white" : "text-black"}`}>Com Telefone</Text>
         </TouchableOpacity>
       </View>
 

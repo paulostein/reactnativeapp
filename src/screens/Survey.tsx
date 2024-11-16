@@ -1,0 +1,62 @@
+import React, { useState } from "react";
+import { View, ActivityIndicator, Text, TouchableOpacity } from "react-native";
+import useFetchSurvey from "../api/hooks/useFetchSurvey";
+import { formatDate } from "../utils/formatDate";
+import { useNavigation } from '@react-navigation/native';
+import Icon from "react-native-vector-icons/MaterialIcons";
+import { StackScreenProps } from "@react-navigation/stack";
+
+type Survey = {
+  id: number;
+  anomalia: { id: number, nome: string };
+  areaVistoriaInterna_id: number;
+  dataHora: string;
+};
+
+type RootStackParamList = {
+  Home: undefined;
+  Login: undefined;
+  Customer: undefined;
+  Survey: undefined;
+  SurveyDetails: { survey: Survey };
+};
+
+type Props = StackScreenProps<RootStackParamList, "Survey">;
+
+export default function Survey({ navigation }: Props) {
+  const { data, loading } = useFetchSurvey();
+
+  if (loading) {
+    return <ActivityIndicator className="mt-10" />;
+  }
+
+  return (
+    <View className="p-4">
+      {data.length === 0 ? (
+        <Text className="text-center text-gray-500">Nenhuma vistoria encontrada</Text>
+      ) : (
+        <View>
+          <View className="flex-row items-center border-b-2 border-gray-300 pb-2 mb-4">
+            <Text className="w-32 font-bold text-gray-700 text-center">Código da Área Vistoria Interna</Text>
+            <Text className="w-32 font-bold text-gray-700 text-center">Anomalia</Text>
+            <Text className="w-36 font-bold text-gray-700 text-center">Data</Text>
+            <Text className="w-24 " />
+          </View>
+          {data.map((survey: Survey) => (
+            <View key={survey.id} className="flex-row border-b border-gray-200 py-3">
+              <Text className="w-32 text-gray-600 text-center px-4">{survey.areaVistoriaInterna_id}</Text>
+              <Text className="w-32 text-gray-600 text-center px-4">{survey.anomalia?.nome || 'N/A'}</Text>
+              <Text className="w-36 text-gray-600 text-center px-4">{formatDate(survey.dataHora)}</Text>
+              <TouchableOpacity
+                className="w-24 flex items-center justify-center"
+                onPress={() => navigation.navigate("SurveyDetails", { survey })}
+              >
+                <Icon name="chevron-right" size={28} color="#4A5568" />
+              </TouchableOpacity>
+            </View>
+          ))}
+        </View>
+      )}
+    </View>
+  );
+}

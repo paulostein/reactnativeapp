@@ -2,8 +2,6 @@ import React, { useEffect } from "react";
 import { View, Text, Button, Alert, ActivityIndicator } from "react-native";
 import { useAuth } from "../context/AuthContext";
 import { StackScreenProps } from "@react-navigation/stack";
-import useFetchData from "../api/hooks/useFetchData";
-
 
 type RootStackParamList = {
   Home: undefined;
