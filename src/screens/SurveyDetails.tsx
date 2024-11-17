@@ -1,13 +1,33 @@
-import React from "react";
+import React, { useState } from "react";
 import { View, Text, Image, Button } from "react-native";
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParamList } from "../types";
 import { formatDate } from "../utils/formatDate";
+import { launchImageLibrary } from "react-native-image-picker";
+import useAddSurveyPhoto from "../api/hooks/useAddSurveyPhoto";
 
 type SurveyDetailsProps = NativeStackScreenProps<RootStackParamList, 'SurveyDetails'>;
 
 export default function SurveyDetails({ route, navigation }: SurveyDetailsProps) {
   const { survey } = route.params;
+  const { addPhoto } = useAddSurveyPhoto();
+
+  const handleAddPhoto = () => {
+    launchImageLibrary(
+      {
+        mediaType: "photo",
+        selectionLimit: 1,
+      },
+      (response) => {
+        if (response.assets && response.assets.length > 0) {
+          const newPhotoUri = response.assets[0].uri;
+          if (newPhotoUri) {
+            addPhoto(survey.id, newPhotoUri)
+          }
+        }
+      }
+    );
+  };
 
   return (
     <View className="p-4">
@@ -43,10 +63,13 @@ export default function SurveyDetails({ route, navigation }: SurveyDetailsProps)
           ))}
         </View>
       )}
-      <Button
-        title="Editar"
-        onPress={() => navigation.navigate('EditSurvey', { survey })}
-      />
+      <View className="mt-4 space-y-4">
+        <Button title="Adicionar Foto" onPress={handleAddPhoto} />
+        <Button
+          title="Editar"
+          onPress={() => navigation.navigate('EditSurvey', { survey })}
+        />
+      </View>
     </View>
   );
 }
