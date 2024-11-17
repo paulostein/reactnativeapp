@@ -14,10 +14,10 @@ const useUpdateSurvey = () => {
 
     try {
       await updateSurvey(id, data);
-      setSuccess(true);
+      return 'Vistoria atualizada'
     } catch (err: any) {
-      console.error(err);
       setError(err.message || 'Erro ao atualizar o levantamento.');
+      return err.message;
     } finally {
       setLoading(false);
     }

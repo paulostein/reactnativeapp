@@ -1,17 +1,19 @@
 import React, { useState } from "react";
-import { View, Text, TextInput, Switch, Button, Platform } from "react-native";
+import { View, Text, TextInput, Switch, Button, Platform, Alert, ScrollView } from "react-native";
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { RootStackParamList } from "../types";
+import { Anomalia, Categoria, RootStackParamList, Tipo } from "../types";
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { formatDate } from "../utils/formatDate";
 import useUpdateSurvey from "../api/hooks/useUpdateSurvey"
+import useFetchType from "../api/hooks/useFetchTipoAnomalia";
+import useFetchAnomaly from "../api/hooks/useFetchAnomaly";
+import useFetchCategory from "../api/hooks/useFetchCategoriaPrioridade";
+import { Picker } from '@react-native-picker/picker';
 
 type EditSurveyProps = NativeStackScreenProps<RootStackParamList, 'EditSurvey'>;
 
 export default function EditSurvey({ route, navigation }: EditSurveyProps) {
   const { survey } = route.params;
-  console.log(survey);
-
   const [areaVistoriaInternaId, setAreaVistoriaInternaId] = useState(survey.areaVistoriaInterna_id);
   const [dataHora, setDataHora] = useState(survey.dataHora);
   const [contemAnomalia, setContemAnomalia] = useState(survey.contemAnomalia);
@@ -20,9 +22,12 @@ export default function EditSurvey({ route, navigation }: EditSurveyProps) {
   const [categoria, setCategoria] = useState(survey.categoria?.enum);
   const [observacao, setObservacao] = useState(survey.observacao);
   const [showDatePicker, setShowDatePicker] = useState(false);
-  const { updateData } = useUpdateSurvey();
+  const { updateData, error, success } = useUpdateSurvey();
+  const anomalies = useFetchAnomaly();
+  const types = useFetchType();
+  const categories = useFetchCategory();
 
-  const handleSave = () => {
+  const handleSave = async () => {
     const updatedSurvey = {
       areaVistoriaInterna_id: areaVistoriaInternaId,
       dataHora,
@@ -33,8 +38,9 @@ export default function EditSurvey({ route, navigation }: EditSurveyProps) {
       categoria,
     };
 
-    updateData(survey.id, updatedSurvey);
-    navigation.navigate('Survey')
+    const response = await updateData(survey.id, updatedSurvey);
+
+    Alert.alert(response);
   };
 
   const handleDateChange = (event: any, selectedDate: Date | undefined) => {
@@ -46,7 +52,7 @@ export default function EditSurvey({ route, navigation }: EditSurveyProps) {
   };
 
   return (
-    <View className="p-4">
+    <ScrollView contentContainerStyle={{ padding: 16 }}>
       <Text>ID: {survey.id}</Text>
       <Text>Código da Área Vistoria Interna:</Text>
       <TextInput
@@ -76,27 +82,59 @@ export default function EditSurvey({ route, navigation }: EditSurveyProps) {
       </View>
       {contemAnomalia &&
         <>
-          <Text>Id Anomalia:</Text>
-          <TextInput
-            value={anomaliaId}
-            onChangeText={setAnomaliaId}
-            keyboardType='numeric'
-            style={{ borderBottomWidth: 1, marginBottom: 10 }}
-          />
+          <Text>Anomalia:</Text>
+          <View className="border-b border-gray-300 mb-4">
+            <Picker
+              selectedValue={anomaliaId}
+              onValueChange={(itemValue) => setAnomaliaId(itemValue)}
+              className="text-lg"
+            >
+              <Picker.Item label="Selecione uma opção" value="" />
+              {anomalies.map((item: Anomalia) => (
+                <Picker.Item
+                  key={item.id}
+                  label={item.nome}
+                  value={item.id}
+                />
+              ))}
+            </Picker>
+          </View>
         </>
       }
       <Text>Tipo:</Text>
-      <TextInput
-        value={tipo}
-        onChangeText={setTipo}
-        style={{ borderBottomWidth: 1, marginBottom: 10 }}
-      />
+      <View className="border-b border-gray-300 mb-4">
+        <Picker
+          selectedValue={tipo}
+          onValueChange={(itemValue) => setTipo(itemValue)}
+          className="text-lg"
+        >
+          <Picker.Item label="Selecione uma opção" value="" />
+          {types.map((item: Tipo) => (
+            <Picker.Item
+              key={item.enum}
+              label={item.descricao}
+              value={item.enum}
+            />
+          ))}
+        </Picker>
+      </View>
       <Text>Categoria:</Text>
-      <TextInput
-        value={categoria}
-        onChangeText={setCategoria}
-        style={{ borderBottomWidth: 1, marginBottom: 10 }}
-      />
+      <View className="border-b border-gray-300 mb-4">
+        <Picker
+          selectedValue={categoria}
+          onValueChange={(itemValue) => setCategoria(itemValue)}
+          className="text-lg"
+        >
+          <Picker.Item label="Selecione uma opção" value="" />
+          {categories.map((item: Categoria) => (
+            <Picker.Item
+              key={item.prioridade}
+              label={item.descricao}
+              value={item.enum}
+            />
+          ))}
+        </Picker>
+      </View>
       <Text>Observação:</Text>
       <TextInput
         value={observacao}
@@ -104,6 +142,6 @@ export default function EditSurvey({ route, navigation }: EditSurveyProps) {
         style={{ borderBottomWidth: 1, marginBottom: 10 }}
       />
       <Button title="Salvar" onPress={handleSave} />
-    </View>
+    </ScrollView>
   );
 }

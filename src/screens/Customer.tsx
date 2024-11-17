@@ -52,13 +52,13 @@ export default function Customer() {
         </TouchableOpacity>
         <TouchableOpacity
           onPress={() => setFilterType("withEmail")}
-          className={`w-1/4 px-4 py-2 rounded-md ${filterType === "withEmail" ? "bg-blue-500" : "bg-gray-300"}`}
+          className={`flex justify-center items-center w-1/4 px-4 py-2 rounded-md ${filterType === "withEmail" ? "bg-blue-500" : "bg-gray-300"}`}
         >
           <Text className={`text-center ${filterType === "withEmail" ? "text-white" : "text-black"}`}>Com Email</Text>
         </TouchableOpacity>
         <TouchableOpacity
           onPress={() => setFilterType("withPhone")}
-          className={`w-1/4 px-4 py-2 rounded-md ${filterType === "withPhone" ? "bg-blue-500" : "bg-gray-300"}`}
+          className={`flex justify-center items-center w-1/4 px-4 py-2 rounded-md ${filterType === "withPhone" ? "bg-blue-500" : "bg-gray-300"}`}
         >
           <Text className={`text-center ${filterType === "withPhone" ? "text-white" : "text-black"}`}>Com Telefone</Text>
         </TouchableOpacity>
