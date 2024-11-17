@@ -8,5 +8,5 @@ export const formatDate = (date: string): string => {
     hour12: false,
   };
 
-  return new Date(date).toLocaleString('pt-BR', options).replace(',', '');
+  return new Date(date).toLocaleString('pt-BR', options);
 };

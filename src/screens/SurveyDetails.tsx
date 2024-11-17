@@ -1,12 +1,12 @@
 import React from "react";
-import { View, Text, Image } from "react-native";
+import { View, Text, Image, Button } from "react-native";
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParamList } from "../types";
 import { formatDate } from "../utils/formatDate";
 
 type SurveyDetailsProps = NativeStackScreenProps<RootStackParamList, 'SurveyDetails'>;
 
-export default function SurveyDetails({ route }: SurveyDetailsProps) {
+export default function SurveyDetails({ route, navigation }: SurveyDetailsProps) {
   const { survey } = route.params;
 
   return (
@@ -43,6 +43,10 @@ export default function SurveyDetails({ route }: SurveyDetailsProps) {
           ))}
         </View>
       )}
+      <Button
+        title="Editar"
+        onPress={() => navigation.navigate('EditSurvey', { survey })}
+      />
     </View>
   );
-};
+}

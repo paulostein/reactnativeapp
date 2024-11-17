@@ -4,24 +4,27 @@ export type RootStackParamList = {
   Customer: undefined;
   Survey: undefined;
   SurveyDetails: {
-    survey: Partial<SurveyDetails>
+    survey: SurveyDetails
+  };
+  EditSurvey: {
+    survey: SurveyDetails
   };
 };
 
 export type SurveyDetails = {
   id: number
-  areaVistoriaInterna_id: number
+  areaVistoriaInterna_id: string
   dataHora: string
   contemAnomalia: boolean
-  anomalia: Anomalia
-  tipo: Tipo
-  categoria: Categoria
-  observacao: string
+  anomalia: Partial<Anomalia>
+  tipo: Partial<Tipo>
+  categoria: Partial<Categoria>
+  observacao: string | undefined
   fotos: string[]
 }
 
 export type Anomalia = {
-  id: number
+  id: string
   nome: string
 }
 
@@ -34,4 +37,14 @@ export type Categoria = {
   prioridade: number
   descricao: string
   enum: string
+}
+
+export type surveyToUpdate = {
+  areaVistoriaInterna_id: string,
+  dataHora: string,
+  contemAnomalia: boolean,
+  anomalia_id: string | undefined,
+  tipo: string | undefined,
+  observacao: string | undefined,
+  categoria: string | undefined,
 }
