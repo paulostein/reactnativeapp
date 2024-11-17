@@ -18,7 +18,7 @@ type RootStackParamList = {
   Customer: undefined;
   Survey: undefined;
   SurveyDetails: { survey: Survey };
-  CreateSurvey: undefined;  // Nova tela de criação de pesquisa
+  CreateSurvey: undefined;
 };
 
 type Props = StackScreenProps<RootStackParamList, "Survey">;

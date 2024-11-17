@@ -4,7 +4,7 @@ import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { Anomalia, Categoria, RootStackParamList, Tipo } from "../types";
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { formatDate } from "../utils/formatDate";
-import useCreateSurvey from "../api/hooks/useCreateSurvey"; // Alterar para hook de criar pesquisa
+import useCreateSurvey from "../api/hooks/useCreateSurvey";
 import useFetchType from "../api/hooks/useFetchTipoAnomalia";
 import useFetchAnomaly from "../api/hooks/useFetchAnomaly";
 import useFetchCategory from "../api/hooks/useFetchCategoriaPrioridade";

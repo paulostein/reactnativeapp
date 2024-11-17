@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Text, TextInput, Switch, Button, Platform, Alert, ScrollView } from "react-native";
+import { View, Text, TextInput, Switch, Button, Alert, ScrollView } from "react-native";
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { Anomalia, Categoria, RootStackParamList, Tipo } from "../types";
 import DateTimePicker from '@react-native-community/datetimepicker';
