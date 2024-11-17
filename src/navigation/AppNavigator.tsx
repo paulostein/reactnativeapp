@@ -9,6 +9,7 @@ import Survey from "../screens/Survey";
 import SurveyDetails from "../screens/SurveyDetails";
 import EditSurvey from "../screens/EditSurvey";
 import { RootStackParamList } from "../types";
+import CreateSurvey from "../screens/CreateSurvey";
 
 const Stack = createStackNavigator<RootStackParamList>();
 
@@ -25,6 +26,7 @@ export default function AppNavigator() {
             <Stack.Screen name="Survey" component={Survey} />
             <Stack.Screen name="SurveyDetails" component={SurveyDetails} />
             <Stack.Screen name="EditSurvey" component={EditSurvey} />
+            <Stack.Screen name="CreateSurvey" component={CreateSurvey} />
           </>
         ) : (
           <Stack.Screen name="Login" component={Login} />

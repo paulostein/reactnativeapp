@@ -58,9 +58,11 @@ export default function SurveyDetails({ route, navigation }: SurveyDetailsProps)
       {survey.fotos && survey.fotos.length > 0 && (
         <View>
           <Text>Fotos:</Text>
-          {survey.fotos.map((foto, index) => (
-            <Image key={index} source={{ uri: foto }} style={{ width: 100, height: 100, marginVertical: 5 }} />
-          ))}
+          <View className="flex-row flex-wrap">
+            {survey.fotos.map((foto, index) => (
+              <Image key={index} source={{ uri: foto }} style={{ width: 100, height: 100, marginVertical: 5, margin: 3 }} />
+            ))}
+          </View>
         </View>
       )}
       <View className="mt-4 space-y-4">

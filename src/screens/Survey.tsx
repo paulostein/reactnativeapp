@@ -18,6 +18,7 @@ type RootStackParamList = {
   Customer: undefined;
   Survey: undefined;
   SurveyDetails: { survey: Survey };
+  CreateSurvey: undefined;  // Nova tela de criação de pesquisa
 };
 
 type Props = StackScreenProps<RootStackParamList, "Survey">;
@@ -38,12 +39,20 @@ export default function Survey({ navigation }: Props) {
 
   return (
     <View className="flex-1 p-4">
-      <TextInput
-        className="border border-gray-300 rounded-lg px-4 py-2 mb-4"
-        placeholder="Buscar por código ou anomalia..."
-        value={searchText}
-        onChangeText={setSearchText}
-      />
+      <View className="flex-row items-center mb-4">
+        <TextInput
+          className="border border-gray-300 rounded-lg px-4 py-2 flex-1"
+          placeholder="Buscar por código ou anomalia..."
+          value={searchText}
+          onChangeText={setSearchText}
+        />
+        <TouchableOpacity
+          className="ml-4 p-3 bg-blue-500 rounded-full"
+          onPress={() => navigation.navigate("CreateSurvey")}
+        >
+          <Icon name="add" size={28} color="#fff" />
+        </TouchableOpacity>
+      </View>
 
       {filteredData.length === 0 ? (
         <Text className="text-center text-gray-500">Nenhuma vistoria encontrada</Text>

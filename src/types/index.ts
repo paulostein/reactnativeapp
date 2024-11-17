@@ -9,6 +9,7 @@ export type RootStackParamList = {
   EditSurvey: {
     survey: SurveyDetails
   };
+  CreateSurvey: undefined;
 };
 
 export type SurveyDetails = {
