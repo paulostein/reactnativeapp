@@ -41,10 +41,11 @@ export default function CreateSurvey({ navigation }: CreateSurveyProps) {
 
     if (response.success) {
       Alert.alert("Vistoria criada com sucesso!");
-      navigation.goBack();
     } else {
       Alert.alert("Erro ao criar Vistoria", response.message);
     }
+
+    navigation.navigate('Survey')
   };
 
   const handleDateChange = (event: any, selectedDate: Date | undefined) => {

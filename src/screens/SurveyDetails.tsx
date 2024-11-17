@@ -23,6 +23,7 @@ export default function SurveyDetails({ route, navigation }: SurveyDetailsProps)
           const newPhotoUri = response.assets[0].uri;
           if (newPhotoUri) {
             addPhoto(survey.id, newPhotoUri)
+            navigation.navigate('Survey')
           }
         }
       }

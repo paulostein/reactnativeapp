@@ -39,8 +39,8 @@ export default function EditSurvey({ route, navigation }: EditSurveyProps) {
     };
 
     const response = await updateData(survey.id, updatedSurvey);
-
     Alert.alert(response);
+    navigation.navigate('Survey')
   };
 
   const handleDateChange = (event: any, selectedDate: Date | undefined) => {
