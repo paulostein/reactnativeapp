@@ -39,11 +39,7 @@ export default function CreateSurvey({ navigation }: CreateSurveyProps) {
 
     const response = await createData(newSurvey);
 
-    if (response.success) {
-      Alert.alert("Vistoria criada com sucesso!");
-    } else {
-      Alert.alert("Erro ao criar Vistoria", response.message);
-    }
+    Alert.alert(response);
 
     navigation.navigate('Survey')
   };

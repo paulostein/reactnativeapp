@@ -3,8 +3,8 @@ import { View, Text, Image, Button } from "react-native";
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParamList } from "../types";
 import { formatDate } from "../utils/formatDate";
-import { launchImageLibrary } from "react-native-image-picker";
 import useAddSurveyPhoto from "../api/hooks/useAddSurveyPhoto";
+import * as ImagePicker from 'expo-image-picker';
 
 type SurveyDetailsProps = NativeStackScreenProps<RootStackParamList, 'SurveyDetails'>;
 
@@ -12,22 +12,26 @@ export default function SurveyDetails({ route, navigation }: SurveyDetailsProps)
   const { survey } = route.params;
   const { addPhoto } = useAddSurveyPhoto();
 
-  const handleAddPhoto = () => {
-    launchImageLibrary(
-      {
-        mediaType: "photo",
-        selectionLimit: 1,
-      },
-      (response) => {
-        if (response.assets && response.assets.length > 0) {
-          const newPhotoUri = response.assets[0].uri;
-          if (newPhotoUri) {
-            addPhoto(survey.id, newPhotoUri)
-            navigation.navigate('Survey')
-          }
-        }
+  const handleAddPhoto = async () => {
+    const permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
+
+    if (!permissionResult.granted) {
+      alert('Permissão para acessar a biblioteca de mídia é necessária.');
+      return;
+    }
+    const pickerResult = await ImagePicker.launchImageLibraryAsync({
+      allowsEditing: false,
+      quality: 1,
+    });
+
+    if (pickerResult.assets && pickerResult.assets.length > 0) {
+      const newPhotoUri = pickerResult.assets[0].uri;
+      if (newPhotoUri) {
+        const response = await addPhoto(survey.id, newPhotoUri);
+        alert(response);
+        navigation.navigate('Survey');
       }
-    );
+    }
   };
 
   return (

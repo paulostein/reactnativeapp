@@ -60,14 +60,14 @@ export default function Survey({ navigation }: Props) {
         <ScrollView>
           <View>
             <View className="flex-row items-center border-b-2 border-gray-300 pb-2 mb-4">
-              <Text className="w-32 font-bold text-gray-700 text-center">Código da Área Vistoria Interna</Text>
+              <Text className="w-12 font-bold text-gray-700 text-center">Cód.Área</Text>
               <Text className="w-32 font-bold text-gray-700 text-center">Anomalia</Text>
               <Text className="w-36 font-bold text-gray-700 text-center">Data</Text>
               <Text className="w-24 " />
             </View>
             {filteredData.map((survey: Survey) => (
               <View key={survey.id} className="flex-row border-b border-gray-200 py-3">
-                <Text className="w-32 text-gray-600 text-center px-4">{survey.areaVistoriaInterna_id}</Text>
+                <Text className="w-12 text-gray-600 text-center px-4">{survey.areaVistoriaInterna_id}</Text>
                 <Text className="w-32 text-gray-600 text-center px-4">{survey.anomalia?.nome || "N/A"}</Text>
                 <Text className="w-36 text-gray-600 text-center px-4">{formatDate(survey.dataHora)}</Text>
                 <TouchableOpacity
