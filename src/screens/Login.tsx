@@ -18,7 +18,7 @@ export default function Login({ navigation }: Props) {
 
   const handleLogin = async () => {
     const isSuccess = await login(username, password);
-  
+
     if (isSuccess) {
       setErrorMessage("");
       Alert.alert("Login bem-sucedido!");
@@ -30,7 +30,7 @@ export default function Login({ navigation }: Props) {
   return (
     <View className="flex-1 justify-center p-5 bg-blue-100">
       <Text className="text-2xl text-center font-semibold mb-6">Login</Text>
-      
+
       <TextInput
         className="border border-gray-300 p-3 rounded mb-4"
         placeholder="Usuário"
@@ -40,7 +40,7 @@ export default function Login({ navigation }: Props) {
           if (errorMessage) setErrorMessage("");
         }}
       />
-      
+
       <TextInput
         className="border border-gray-300 p-3 rounded mb-4"
         placeholder="Senha"
@@ -51,10 +51,11 @@ export default function Login({ navigation }: Props) {
         }}
         secureTextEntry
       />
-      
+
       {errorMessage ? <Text className="text-red-500 text-center mb-4">{errorMessage}</Text> : null}
-      
+
       <Button title="Entrar" onPress={handleLogin} />
+      <Text className="text-xs text-right mt-6 color-red-500">*Para logar utilize Usuário:user Senha:1234</Text>
     </View>
   );
 };
