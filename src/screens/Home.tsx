@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { View, Text, Button, Alert, ActivityIndicator } from "react-native";
+import { View, Text, Button, Alert } from "react-native";
 import { useAuth } from "../context/AuthContext";
 import { StackScreenProps } from "@react-navigation/stack";
 
@@ -18,7 +18,9 @@ export default function Home({ navigation }: Props) {
   useEffect(() => {
     navigation.setOptions({
       headerRight: () => (
-        <View className="mr-5"><Button title="Sair" onPress={handleLogout} /></View>        
+        <View className="mr-5">
+          <Button title="Sair" onPress={handleLogout} />
+        </View>
       ),
     });
   }, [navigation]);
@@ -29,17 +31,21 @@ export default function Home({ navigation }: Props) {
   };
 
   return (
-    <View className="flex-1 justify-center items-center space-y-4 p-5 bg-slate-100">
-      <Button 
-        title="Ir para Customer" 
-        onPress={() => navigation.navigate('Customer')} 
-      />
-      <Button 
-        title="Ir para Vistoria" 
-        onPress={() => navigation.navigate('Survey')} 
-      />
+    <View className="flex-1 justify-center items-center space-y-6 p-5 bg-slate-100">
+      <Text className="m-10 text-2xl font-bold">Bem-vindo, {user?.username}!</Text>
+
+      <View className="m-4 space-y-4 w-full max-w-xs">
+        <Button
+          title="Clientes"
+          onPress={() => navigation.navigate('Customer')}
+        />
+      </View>
+      <View className="m-4 space-y-4 w-full max-w-xs">
+        <Button
+          title="Vistorias"
+          onPress={() => navigation.navigate('Survey')}
+        />
+      </View>
     </View>
   );
 };
-
-
